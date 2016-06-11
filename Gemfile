@@ -30,7 +30,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-
+gem 'aws-sdk', '< 2.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -45,10 +45,16 @@ group :development, :test do
   gem 'byebug'
 end
 
+gem 'paperclip', '~> 4.3', '>= 4.3.6'
+
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 end
+# Access Key ID:
+#AKIAIXGENWSWE6CXIZAA
+#Secret Access Key:
+#u5lkQhg8Y3Kh2S1nL2eP4e2U/uJJmmepJ5Wu6NN4
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
