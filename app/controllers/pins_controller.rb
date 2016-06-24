@@ -1,7 +1,25 @@
 class PinsController < ApplicationController
-  before_action :set_pin, only: [:show, :edit, :update, :destroy]
+  before_action :set_pin, only: [:show, :edit, :update, :destroy, :repost, :like]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :correct_user, only: [:edit, :update, :destroy]
+
+  def repost
+      @pin = Pin.find(params[:id]).repost(current_user)
+      redirect_to root_url
+    end
+
+  def like
+      # Define and build an empty "like" object attached to the pin
+      @like = @pin.likes.build(user_id: current_user.id)
+      # attempt to save the like object
+    if @like.save
+        flash[:notice] =  "You liked a recording from #{@pin.user.username}!"
+        redirect_to(pins_path)
+    else
+        flash[:notice] =  "You have already liked this recording!"
+        redirect_to(pins_path)
+    end
+  end
   # GET /pins
   # GET /pins.json
   def index
@@ -29,7 +47,7 @@ class PinsController < ApplicationController
 
     respond_to do |format|
       if @pin.save
-        format.html { redirect_to @pin, notice: 'Pin was successfully created.' }
+        format.html { redirect_to pins_path, notice: 'Pin was successfully created.' }
         format.json { render :show, status: :created, location: @pin }
       else
         format.html { render :new }
@@ -75,5 +93,6 @@ class PinsController < ApplicationController
     def correct_user
     @pin = current_user.pins.find_by(id: params[:id])
     redirect_to pins_path, notice: "Not authorized to edit this pin" if @pin.nil?
-end
+  end
+
 end

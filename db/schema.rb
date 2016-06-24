@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611163726) do
+ActiveRecord::Schema.define(version: 20160617024219) do
+
+  create_table "boards", force: :cascade do |t|
+    t.string   "board_name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "pin_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "pins", force: :cascade do |t|
     t.string   "description"
@@ -22,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160611163726) do
     t.string   "pin_image_content_type"
     t.integer  "pin_image_file_size"
     t.datetime "pin_image_updated_at"
+    t.integer  "original_pin_id"
   end
 
   add_index "pins", ["user_id"], name: "index_pins_on_user_id"
@@ -39,6 +54,12 @@ ActiveRecord::Schema.define(version: 20160611163726) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "username"
+    t.string   "bio"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

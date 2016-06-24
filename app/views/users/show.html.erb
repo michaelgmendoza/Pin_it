@@ -1,0 +1,27 @@
+<div class="">
+  <%= image_tag @user.avatar.url(:thumb) %>
+</div>
+<h3><%= @user.username  %></h3>
+<p> <%= @user.bio  %> </p>
+
+<div class="row pin_it-grid">
+  <% @user.pins.each do |pin| %>
+  <div class="col-md-3 pin-item">
+    <div class="panel panel-default pin">
+      <div class="panel-body">
+        <%= link_to image_tag(pin.pin_image.url(:medium)), pin %>
+      </div>
+    <div class="panel-footer">
+      <p><strong><%= link_to pin.user.username, user_path(pin.user.username) %></strong></p>
+      <p><%= pin.description %></p>
+      <% if pin.user == current_user %>
+        <div class="">
+          <%= link_to 'Edit', edit_pin_path(pin) %> |
+          <%= link_to 'Delete', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
